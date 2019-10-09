@@ -1,0 +1,20 @@
+﻿span {
+    width: 100px;
+}
+
+#result {
+    Border: none;
+    outline: none;
+}
+
+.colorLightGray {
+    background-color: lightgray;
+}
+
+#expressions_list {
+    display: inline-block;
+    position: absolute;
+    top: 50px;
+    right: 0px;
+    width: initial;
+}

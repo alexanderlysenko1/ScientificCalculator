@@ -1,0 +1,99 @@
+﻿@{
+    ViewBag.Title = "Calculator";
+}
+<link href="~/Content/calculatorDesign.css" rel="stylesheet" />
+<script src="~/Scripts/Calculator/Calculator.js"></script>
+
+    <body onload="getAllExpressions();">
+        <h2>Calculator</h2>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <input type="text" id="op1" hidden />
+                    <input type="text" id="oldOperator" hidden />
+                    <input type="text" id="op2" hidden />
+                    <input type="text" id="newOperator" hidden />
+
+                    <table align="right" style="display: inline-block;">
+
+                        <tr>
+                            <td><p>Result:</p></td>
+                            <td><input type="text" id="result" disabled /></td>
+                        </tr>
+                    </table>
+
+                    <div id="keyPad">
+                        <table id="calculator" align="right" style="display: inline-block;">
+                            <tr>
+                                <td><span id="opPercent" class="keypad colorLightGray btn btn-default">%</span></td>
+                                <td><span id="sqrt" class="keypad colorLightGray  btn btn-default">√</span></td>
+                                <td><span id="opPow" class="keypad colorLightGray btn btn-default">х²</span></td>
+                                <td><span id="opOne" class="keypad colorLightGray  btn btn-default">lx</span></td>
+                            </tr>
+                            <tr>
+                                <td><span id="clear" class=" btn colorLightGray btn-default">CE</span></td>
+                                <td><span id="clear" class=" btn colorLightGray btn-default">C</span></td>
+                                <td><span id="clearOne" class="btn colorLightGray btn-default">re</span></td>
+                                <td><span id="opDivide" class="keypad colorLightGray btn btn-default">÷</span></td>
+                            </tr>
+                            <tr>
+                                <td><span id="num7" class="keypad  btn btn-default">7</span></td>
+                                <td><span id="num8" class="keypad  btn btn-default">8</span></td>
+                                <td><span id="num9" class="keypad  btn btn-default">9</span></td>
+                                <td><span id="opMult" class="keypad colorLightGray btn btn-default">×</span></td>
+                            </tr>
+                            <tr>
+                                <td><span id="num4" class="keypad  btn btn-default">4</span></td>
+                                <td><span id="num5" class="keypad btn btn-default">5</span></td>
+                                <td><span id="num6" class="keypad btn btn-default">6</span></td>
+                                <td><span id="opSub" class="keypad colorLightGray btn btn-default">-</span></td>
+                            </tr>
+
+                            <tr>
+                                <td><span id="num1" class="keypad  btn btn-default">1</span></td>
+                                <td><span id="num2" class="keypad  btn btn-default">2</span></td>
+                                <td><span id="num3" class="keypad  btn btn-default">3</span></td>
+                                <td><span id="opAdd" class="keypad colorLightGray btn btn-default">+</span></td>
+                            </tr>
+
+                            <tr>
+                                <td><span id="negpos" class="keypad colorLightGray btn btn-default">±</span></td>
+                                <td><span id="num0" class="keypad colorLightGray btn btn-default">0</span></td>
+                                <td><span id="decimal" class="keypad colorLightGray btn btn-default">.</span></td>
+                                <td><span id="equals" class="keypad colorLightGray btn btn-default">=</span></td>
+                            </tr>
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table id="expressions_list" class="table" border="1" align="right"></table>
+    </body>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        function getAllExpressions() {
+            $.getJSON("/Calculator/Expressions", null, getExpressions);
+        };
+
+        function getExpressions(expressions) {
+            $("#expressions_list").html("");
+            $("#expressions_list").append("<thead class='thead-light'><tr><td><b>  Operation  </b></td><td><b>  Result  </b></td></tr></thead>");
+            $.each(expressions, function (i) {
+                $("#expressions_list").append("<tbody><tr><td>" + this.Operation + "</td><td>" + this.Result + "</td></tr></tbody>");
+            });
+        }
+        document.getElementById("clear").onclick = function (e) {
+            document.getElementById("result").value = "";
+            document.getElementById("op1").value = "";
+        }
+        document.getElementById("clearOne").onclick = function (e) {
+            var $myInput = $('#result');
+            var $operant1 = $('#op1');
+            $myInput.val($myInput.val().slice(0 - 1));
+            $operant1.val($operant1.val().slice(0 - 1));
+        }
+    </script>
